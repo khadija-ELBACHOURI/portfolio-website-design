@@ -105,7 +105,7 @@ export default function HeroSection() {
           </h1>
 
           <p className="text-xl md:text-2xl lg:text-3xl text-gray-300 font-light text-balance">
-            Computer Science Engineer | Full-Stack Developer | AI & ML Enthusiast
+            Computer Science Engineer | Full-Stack Developer
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
