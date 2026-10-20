@@ -12,8 +12,9 @@ export default function AnimatedBackground() {
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
+    // The canvas is fixed to the viewport, so it only needs the viewport size.
     canvas.width = window.innerWidth
-    canvas.height = document.documentElement.scrollHeight
+    canvas.height = window.innerHeight
 
     const particles: Array<{
       x: number
@@ -30,7 +31,6 @@ export default function AnimatedBackground() {
       "rgba(98, 0, 234, 0.3)", // deep purple
     ]
 
-    // Create particles
     for (let i = 0; i < 80; i++) {
       particles.push({
         x: Math.random() * canvas.width,
@@ -42,11 +42,12 @@ export default function AnimatedBackground() {
       })
     }
 
+    let frameId = 0
+
     function animate() {
       if (!ctx || !canvas) return
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      // Draw gradient background
       const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
       gradient.addColorStop(0, "rgba(26, 11, 46, 0.95)")
       gradient.addColorStop(0.5, "rgba(45, 27, 78, 0.95)")
@@ -54,16 +55,13 @@ export default function AnimatedBackground() {
       ctx.fillStyle = gradient
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-      // Draw and update particles
       particles.forEach((particle) => {
+        ctx.shadowBlur = 15
+        ctx.shadowColor = particle.color
         ctx.beginPath()
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
         ctx.fillStyle = particle.color
         ctx.fill()
-
-        // Add glow effect
-        ctx.shadowBlur = 15
-        ctx.shadowColor = particle.color
 
         particle.x += particle.vx
         particle.y += particle.vy
@@ -72,7 +70,8 @@ export default function AnimatedBackground() {
         if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1
       })
 
-      // Draw connections
+      ctx.shadowBlur = 0
+
       particles.forEach((p1, i) => {
         particles.slice(i + 1).forEach((p2) => {
           const dx = p1.x - p2.x
@@ -90,24 +89,20 @@ export default function AnimatedBackground() {
         })
       })
 
-      ctx.shadowBlur = 0
-
-      requestAnimationFrame(animate)
+      frameId = requestAnimationFrame(animate)
     }
 
     animate()
 
     const handleResize = () => {
       canvas.width = window.innerWidth
-      canvas.height = document.documentElement.scrollHeight
+      canvas.height = window.innerHeight
     }
 
     window.addEventListener("resize", handleResize)
-    window.addEventListener("scroll", () => {
-      canvas.height = document.documentElement.scrollHeight
-    })
 
     return () => {
+      cancelAnimationFrame(frameId)
       window.removeEventListener("resize", handleResize)
     }
   }, [])
