@@ -2,45 +2,35 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Github, ExternalLink } from "lucide-react"
+import { Github } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 
-const projects = [
+type Project = {
+  title: string
+  description: string
+  image: string
+  tags: string[]
+  github?: string
+  status?: string
+}
+
+const projects: Project[] = [
   {
-    title: "Job Finding Platform",
+    title: "Task Manager",
     description:
-      "Full-stack recruitment platform with JWT authentication and role-based access. Implemented ML-powered recommendation engine improving job-candidate matching accuracy by 35%. Built with Spring Boot backend and React/React Native frontend.",
-    image: "/job-platform.jpg",
-    tags: ["Spring Boot", "React", "React Native", "MySQL", "Python", "ML"],
-    github: "#",
-    demo: "#",
+      "Full-stack web application to organize projects and tasks. JWT authentication with BCrypt password hashing, protected routes, project CRUD with real-time progress tracking, and task management with due dates, completion status, and overdue indicators. Responsive UI built with Tailwind CSS.",
+    image: "/task-manager.png",
+    tags: ["Spring Boot 3", "React 18", "MySQL", "JWT", "Tailwind CSS", "Docker"],
+    github: "https://github.com/khadija-ELBACHOURI/task-manager-fullstack",
   },
   {
-    title: "E-Learning Management System",
+    title: "Daret Digital",
     description:
-      "Comprehensive training center management system with course creation, user enrollment, and admin dashboards. Features secure authentication with ASP.NET Core Identity and multiple user roles. Built with Entity Framework Core for robust database operations.",
-    image: "/elearning-system.jpg",
-    tags: ["ASP.NET Core", "Entity Framework", "Bootstrap", "SQL Server"],
-    github: "#",
-    demo: "#",
-  },
-  {
-    title: "AI-Powered Chatbot Platform",
-    description:
-      "Intelligent conversational AI platform integrating Dialogflow, OpenAI API, and Rasa. Supports multi-channel deployment across web, WhatsApp, and Discord with real-time monitoring and adaptive parameter tuning.",
-    image: "/ai-chatbot-interface.png",
-    tags: ["Python", "OpenAI API", "Dialogflow", "Rasa", "REST API"],
-    github: "#",
-    demo: "#",
-  },
-  {
-    title: "Employee Management System",
-    description:
-      "Full-stack HR automation platform with role-based access control. Features responsive dashboards, real-time updates, and optimized MySQL database. Built with Laravel backend and modern frontend using Splade and Bootstrap.",
-    image: "/modern-ecommerce-dashboard.png",
-    tags: ["Laravel", "MySQL", "Bootstrap", "REST API"],
-    github: "#",
-    demo: "#",
+      "Full-stack platform digitizing daret (tontine) management, a traditional rotating savings system widely used in Morocco. JWT-based dynamic roles: users start with no role and become an organizer when they create a daret group. Organizers define the member turn order and manage members; members view the group and make payments. Includes a Next.js admin dashboard and a multi-stage Docker build.",
+    image: "/daret-digital.png",
+    tags: ["Spring Boot", "PostgreSQL", "JWT", "Next.js", "Docker"],
+    status: "In progress",
+    github: "https://github.com/khadija-ELBACHOURI/daret_digital_app",
   },
 ]
 
@@ -78,7 +68,7 @@ export default function ProjectsSection() {
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-[#d946ef] to-[#a855f7] mx-auto mb-12 rounded-full" />
 
-          <div className="grid md:grid-cols-2 gap-8 perspective-1000">
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto perspective-1000">
             {projects.map((project, index) => (
               <Card
                 key={project.title}
@@ -94,6 +84,11 @@ export default function ProjectsSection() {
                     className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  {project.status && (
+                    <span className="absolute top-3 right-3 px-3 py-1 text-xs font-semibold rounded-full bg-background/80 text-accent border border-accent/40 backdrop-blur-sm">
+                      {project.status}
+                    </span>
+                  )}
                 </div>
 
                 <CardHeader>
@@ -115,11 +110,11 @@ export default function ProjectsSection() {
                     ))}
                   </div>
 
-                  <div className="flex gap-3">
+                  {project.github && (
                     <Button
                       variant="outline"
                       size="sm"
-                      className="flex-1 border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300 bg-transparent"
+                      className="w-full border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300 bg-transparent"
                       asChild
                     >
                       <a href={project.github} target="_blank" rel="noopener noreferrer">
@@ -127,17 +122,7 @@ export default function ProjectsSection() {
                         Code
                       </a>
                     </Button>
-                    <Button
-                      size="sm"
-                      className="flex-1 bg-accent hover:bg-accent/90 text-accent-foreground transition-all duration-300"
-                      asChild
-                    >
-                      <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        Demo
-                      </a>
-                    </Button>
-                  </div>
+                  )}
                 </CardContent>
               </Card>
             ))}
