@@ -1,37 +1,34 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { Code, Briefcase, Award, Users } from "lucide-react"
+import { Code, Briefcase, Award, Server } from "lucide-react"
 
 const stats = [
-  { label: "Projects Completed", value: 15, icon: Code, suffix: "+" },
-  { label: "Years Coding", value: 3, icon: Briefcase, suffix: "+" },
-  { label: "Technologies", value: 12, icon: Award, suffix: "+" },
-  { label: "Collaborations", value: 8, icon: Users, suffix: "+" },
+  { label: "Internships", value: 3, icon: Briefcase, suffix: "" },
+  { label: "Microservices on BrainBoost", value: 17, icon: Server, suffix: "" },
+  { label: "Oracle Certifications", value: 2, icon: Award, suffix: "" },
+  { label: "Personal Projects", value: 3, icon: Code, suffix: "" },
 ]
 
 function Counter({ end, duration = 2000 }: { end: number; duration?: number }) {
   const [count, setCount] = useState(0)
-  const [hasStarted, setHasStarted] = useState(false)
 
   useEffect(() => {
-    if (!hasStarted) return
-
     let startTime: number | null = null
+    let frameId = 0
+
     const step = (timestamp: number) => {
-      if (!startTime) startTime = timestamp
+      if (startTime === null) startTime = timestamp
       const progress = Math.min((timestamp - startTime) / duration, 1)
       setCount(Math.floor(progress * end))
       if (progress < 1) {
-        requestAnimationFrame(step)
+        frameId = requestAnimationFrame(step)
       }
     }
-    requestAnimationFrame(step)
-  }, [end, duration, hasStarted])
+    frameId = requestAnimationFrame(step)
 
-  useEffect(() => {
-    setHasStarted(true)
-  }, [])
+    return () => cancelAnimationFrame(frameId)
+  }, [end, duration])
 
   return <span>{count}</span>
 }
