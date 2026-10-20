@@ -1,22 +1,38 @@
 "use client"
 
 import { Card } from "@/components/ui/card"
-import { Code2, Database, Brain, Layers, Server, Smartphone, Cloud, Globe, Box } from "lucide-react"
+import {
+  Code2,
+  Database,
+  Brain,
+  Layers,
+  Server,
+  Smartphone,
+  Globe,
+  Box,
+  Workflow,
+  KeyRound,
+  GitBranch,
+} from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 
 const skills = [
-  { name: "Java", icon: Code2, color: "text-[#d946ef]" },
-  { name: "Python", icon: Code2, color: "text-[#a855f7]" },
-  { name: "JavaScript", icon: Code2, color: "text-[#d946ef]" },
-  { name: "React", icon: Layers, color: "text-[#a855f7]" },
-  { name: "Spring Boot", icon: Server, color: "text-[#d946ef]" },
-  { name: "Node.js", icon: Server, color: "text-[#a855f7]" },
-  { name: "AI/ML", icon: Brain, color: "text-[#d946ef]" },
-  { name: "AWS", icon: Cloud, color: "text-[#a855f7]" },
-  { name: "Docker", icon: Box, color: "text-[#d946ef]" },
-  { name: "PostgreSQL", icon: Database, color: "text-[#a855f7]" },
-  { name: "React Native", icon: Smartphone, color: "text-[#d946ef]" },
-  { name: "REST API", icon: Globe, color: "text-[#d946ef]" },
+  { name: "Java", icon: Code2 },
+  { name: "Python", icon: Code2 },
+  { name: "TypeScript", icon: Code2 },
+  { name: "React", icon: Layers },
+  { name: "Next.js", icon: Layers },
+  { name: "React Native", icon: Smartphone },
+  { name: "Spring Boot", icon: Server },
+  { name: "Node.js", icon: Server },
+  { name: "Laravel", icon: Server },
+  { name: "PostgreSQL", icon: Database },
+  { name: "Docker", icon: Box },
+  { name: "GitLab CI/CD", icon: GitBranch },
+  { name: "Keycloak", icon: KeyRound },
+  { name: "n8n", icon: Workflow },
+  { name: "AI/ML", icon: Brain },
+  { name: "REST APIs", icon: Globe },
 ]
 
 export default function AboutSection() {
@@ -56,18 +72,20 @@ export default function AboutSection() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className={`space-y-6 ${isVisible ? "animate-slide-up" : "opacity-0"}`}>
               <p className="text-lg leading-relaxed text-gray-300">
-                I'm a passionate software engineering student at the{" "}
-                <span className="text-accent font-semibold">National School of Applied Sciences of Fes</span>,
-                specializing in full-stack development and AI-powered solutions.
+                I'm a computer science engineer, graduated from the{" "}
+                <span className="text-accent font-semibold">National School of Applied Sciences of Fes</span>, working
+                as a full-stack developer on AI-powered solutions.
               </p>
               <p className="text-lg leading-relaxed text-gray-300">
-                With hands-on experience in building scalable web applications, intelligent automation systems, and
-                machine learning models, I thrive on solving complex problems with elegant, efficient code. I'm
-                constantly exploring cutting-edge technologies to create impactful software solutions.
+                I recently worked on BrainBoost, an AI-powered educational platform built on a Spring Boot
+                microservices architecture, where I designed and built services using RAG, OCR, and speech processing,
+                and implemented authentication, payments, and role-based access control. I also automated business
+                workflows with n8n, and I hold two Oracle Cloud Infrastructure 2025 certifications in AI Foundations
+                and Generative AI.
               </p>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {skills.map((skill, index) => (
                 <Card
                   key={skill.name}
@@ -78,7 +96,7 @@ export default function AboutSection() {
                 >
                   <div className="flex flex-col items-center gap-3">
                     <skill.icon
-                      className={`h-8 w-8 ${skill.color} group-hover:scale-110 transition-transform duration-300`}
+                      className={`h-8 w-8 ${index % 2 === 0 ? "text-[#d946ef]" : "text-[#a855f7]"} group-hover:scale-110 transition-transform duration-300`}
                     />
                     <span className="text-sm font-semibold text-foreground text-center">{skill.name}</span>
                   </div>
