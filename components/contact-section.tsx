@@ -9,6 +9,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Github, Linkedin, Mail, Send } from "lucide-react"
 import { useState, useEffect, useRef } from "react"
 
+const EMAIL = "elbachourikhadija2002@gmail.com"
+
 export default function ContactSection() {
   const [formData, setFormData] = useState({
     name: "",
@@ -36,9 +38,12 @@ export default function ContactSection() {
     return () => observer.disconnect()
   }, [])
 
+  // Opens the visitor's mail client with the message prefilled.
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Form submitted:", formData)
+    const subject = encodeURIComponent(`Portfolio contact from ${formData.name}`)
+    const body = encodeURIComponent(`${formData.message}\n\nFrom: ${formData.name} (${formData.email})`)
+    window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`
   }
 
   return (
@@ -67,7 +72,7 @@ export default function ContactSection() {
                   placeholder="Your name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="bg-input border-border text-foreground focus:border-accent"
+                  className="bg-white/5 border-border text-white placeholder:text-gray-400 focus:border-accent"
                   required
                 />
               </div>
@@ -82,7 +87,7 @@ export default function ContactSection() {
                   placeholder="your.email@example.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="bg-input border-border text-foreground focus:border-accent"
+                  className="bg-white/5 border-border text-white placeholder:text-gray-400 focus:border-accent"
                   required
                 />
               </div>
@@ -96,7 +101,7 @@ export default function ContactSection() {
                   placeholder="Your message..."
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="bg-input border-border text-foreground focus:border-accent min-h-[150px]"
+                  className="bg-white/5 border-border text-white placeholder:text-gray-400 focus:border-accent min-h-[150px]"
                   required
                 />
               </div>
@@ -125,7 +130,7 @@ export default function ContactSection() {
 
             <div className="space-y-4">
               <a
-                href="mailto:your.email@example.com"
+                href={`mailto:${EMAIL}`}
                 className="flex items-center gap-4 p-4 rounded-lg bg-transparent backdrop-blur-sm border border-border hover:border-accent transition-all duration-300 hover:scale-105 group"
               >
                 <div className="p-3 rounded-lg bg-accent/10 border border-accent/20 group-hover:bg-accent/20 transition-colors">
@@ -133,12 +138,12 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Email</p>
-                  <p className="font-semibold text-foreground">your.email@example.com</p>
+                  <p className="font-semibold text-foreground break-all">{EMAIL}</p>
                 </div>
               </a>
 
               <a
-                href="https://linkedin.com/in/yourprofile"
+                href="https://linkedin.com/in/khadija-elbachouri"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 p-4 rounded-lg bg-transparent backdrop-blur-sm border border-border hover:border-accent transition-all duration-300 hover:scale-105 group"
@@ -148,12 +153,12 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">LinkedIn</p>
-                  <p className="font-semibold text-foreground">linkedin.com/in/yourprofile</p>
+                  <p className="font-semibold text-foreground">linkedin.com/in/khadija-elbachouri</p>
                 </div>
               </a>
 
               <a
-                href="https://github.com/yourusername"
+                href="https://github.com/khadija-ELBACHOURI"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 p-4 rounded-lg bg-transparent backdrop-blur-sm border border-border hover:border-accent transition-all duration-300 hover:scale-105 group"
@@ -163,7 +168,7 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">GitHub</p>
-                  <p className="font-semibold text-foreground">github.com/yourusername</p>
+                  <p className="font-semibold text-foreground">github.com/khadija-ELBACHOURI</p>
                 </div>
               </a>
             </div>
@@ -172,7 +177,7 @@ export default function ContactSection() {
 
         {/* Footer */}
         <div className="mt-20 pt-8 border-t border-border text-center">
-          <p className="text-gray-400">© 2025 Your Name. Built with Next.js and Tailwind CSS.</p>
+          <p className="text-gray-400">© 2026 Khadija EL-BACHOURI. Built with Next.js and Tailwind CSS.</p>
         </div>
       </div>
     </section>
