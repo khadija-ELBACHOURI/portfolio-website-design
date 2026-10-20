@@ -35,11 +35,12 @@ export default function HeroSection() {
       })
     }
 
+    let frameId = 0
+
     function animate() {
       if (!ctx || !canvas) return
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      // Draw particles
       particles.forEach((particle) => {
         ctx.beginPath()
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
@@ -53,7 +54,6 @@ export default function HeroSection() {
         if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1
       })
 
-      // Draw connections
       particles.forEach((p1, i) => {
         particles.slice(i + 1).forEach((p2) => {
           const dx = p1.x - p2.x
@@ -71,7 +71,7 @@ export default function HeroSection() {
         })
       })
 
-      requestAnimationFrame(animate)
+      frameId = requestAnimationFrame(animate)
     }
 
     animate()
@@ -82,7 +82,10 @@ export default function HeroSection() {
     }
 
     window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
+    return () => {
+      cancelAnimationFrame(frameId)
+      window.removeEventListener("resize", handleResize)
+    }
   }, [])
 
   const scrollToProjects = () => {
@@ -97,12 +100,12 @@ export default function HeroSection() {
         <div className="space-y-6 animate-fade-in-up">
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-balance">
             <span className="bg-gradient-to-r from-[#d946ef] via-[#a855f7] to-[#6366f1] bg-clip-text text-transparent">
-              Welcome
+              Khadija EL-BACHOURI
             </span>
           </h1>
 
           <p className="text-xl md:text-2xl lg:text-3xl text-gray-300 font-light text-balance">
-            Software Engineering Student | Full-Stack Developer | AI & ML Enthusiast
+            Computer Science Engineer | Full-Stack Developer | AI & ML Enthusiast
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
